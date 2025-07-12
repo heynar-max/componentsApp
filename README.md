@@ -64,3 +64,18 @@ se importan en el punto mas alto de aplicación
 import 'react-native-gesture-handler';
 ```
 se crea archivo creat navigator..
+
+## Paso 4: instalar los iconos vector
+
+-- [**Iconos Vector**](https://github.com/oblador/react-native-vector-icons) --
+```sh
+npm install react-native-vector-icons
+```
+en la carpeta android/app/build.gladle,  pone esta linea
+ ```sh
+project.ext.vectoricons = [
+    iconFontNames: [ 'Ionicons.ttf' ] // Specify font files
+]
+
+apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle");
+```
