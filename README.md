@@ -40,17 +40,6 @@ debe importar este paquete
 import android.os.Bundle;
 ```
 
-se instala el stack
-```sh
-npm install @react-navigation/stack
-npm install react-native-gesture-handler
-npm install @react-native-masked-view/masked-view
-```
-se pone en la parte mas alta de la aplicación
-```sh
-<NavigationContainer>
-```
-
 ## Paso 3: Stack navigator
 
 se instala el stack
@@ -59,9 +48,13 @@ npm install @react-navigation/stack
 npm install react-native-gesture-handler
 npm install @react-native-masked-view/masked-view
 ```
-se importan en el punto mas alto de aplicación
+se importan en el punto mas alto de aplicación app
  ```sh
 import 'react-native-gesture-handler';
+```
+se pone en la parte mas alta de la aplicación app
+```sh
+<NavigationContainer>
 ```
 se crea archivo creat navigator..
 
