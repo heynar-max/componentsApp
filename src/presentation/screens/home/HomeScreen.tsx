@@ -1,12 +1,11 @@
 import React from 'react'
-import { View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { globalStyles } from '../../../config/theme/theme';
-import { Title } from '../../components/ui/Title';
-import { Text } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { MenuItem, Title } from '../../components';
 
-export const menuItems = [
-  // 01-animationMenuItems
+const animationMenuItems = [
+    // 01-animationMenuItems
     {
         name: 'Animation 101',
         icon: 'cube-outline',
@@ -17,7 +16,8 @@ export const menuItems = [
         icon: 'albums-outline',
         component: 'Animation102Screen',
     },
-
+]
+export const menuItems = [
 
     // 02-menuItems
     {
@@ -51,6 +51,9 @@ export const menuItems = [
         component: 'ChangeThemeScreen',
     },
 
+];
+
+const uiMenuItems = [
     // 03- uiMenuItems
     {
         name: 'Switches',
@@ -67,7 +70,7 @@ export const menuItems = [
         icon: 'document-text-outline',
         component: 'TextInputScreen',
     },
-];
+]
 
 export const HomeScreen = () => {
     return (
@@ -76,14 +79,49 @@ export const HomeScreen = () => {
                 <ScrollView>
                     <Title text='Opciones de menu' safe/>
 
-                    {
-                        menuItems.map( item => (
-                            <Text key={item.component}>{ item.name }</Text>
-                        ))
-                    }
+                    {/* animationMenuItems
+                        menuItems
+                        uiMenuItems */}
+
+                        {animationMenuItems.map((item, index) => (
+                            <MenuItem
+                            key={item.component}
+                            {...item}
+                            isFirst={index === 0}
+                            isLast={index === animationMenuItems.length - 1}
+                            />
+                        ))}
+
+                        <View style={styles.separador} />
+                        {uiMenuItems.map((item, index) => (
+                            <MenuItem
+                            key={item.component}
+                            {...item}
+                            isFirst={index === 0}
+                            isLast={index === uiMenuItems.length - 1}
+                            />
+                        ))}
+
+                        <View style={styles.separador} />
+                        {menuItems.map((item, index) => (
+                            <MenuItem
+                            key={item.component}
+                            {...item}
+                            isFirst={index === 0}
+                            isLast={index === menuItems.length - 1}
+                            />
+                        ))}
+
+                        <View style={styles.separador} />
                 </ScrollView>
             </View>
             
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    separador: {
+        marginTop: 30,
+    },
+});
