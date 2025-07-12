@@ -1,12 +1,14 @@
-import React from 'react'
-import { View } from 'react-native'
-import { HomeScreen } from './presentation/screens/home/HomeScreen'
+import 'react-native-gesture-handler';
+
+import { NavigationContainer } from '@react-navigation/native'
+import { Navigation } from './presentation/navigation/Navigation';
 
 export const ComponentsApp = () => {
   return (
-    <View>
-      <HomeScreen/>
-    </View>
+    <NavigationContainer>
+      <Navigation/>
+    </NavigationContainer>
+    
   )
 }
 
