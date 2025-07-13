@@ -1,10 +1,11 @@
-import {Alert,StyleSheet,Text, View} from 'react-native';
+import {Alert,StyleSheet, View} from 'react-native';
 
 
 import {CustomView} from '../../components/ui/CustomView';
 import {Title} from '../../components/ui/Title';
 import {globalStyles} from '../../../config/theme/theme';
 import {Button} from '../../components/ui/Button';
+import { showPrompt } from '../../../config/adapters/prompt.adapter';
 
 
 export const AlertScreen = () => {
@@ -48,7 +49,16 @@ export const AlertScreen = () => {
         },
         );
 
-    
+    const onShowPrompt = () => {
+
+        showPrompt({
+        title: 'Lorem Ipsum',
+        subTitle: 'Nostrud qui duis officia dolor enim.',
+        buttons: [
+            { text: 'Ok', onPress: () => console.log('ok') }
+        ],
+        placeholder: 'Placeholder'
+        });
     
 
         // ! Código nativo
@@ -61,7 +71,7 @@ export const AlertScreen = () => {
         //   'number-pad'
         // );
 
-    
+    };
 
     return (
         <CustomView style={globalStyles.globalMargin}>
@@ -75,7 +85,7 @@ export const AlertScreen = () => {
 
         <View style={styles.AlertView} />
 
-        <Button text="Prompt - Input" onPress={createThreeButtonAlert} />
+        <Button text="Prompt - Input" onPress={onShowPrompt} />
         </CustomView>
     );
 };

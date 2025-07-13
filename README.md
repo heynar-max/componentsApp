@@ -72,3 +72,11 @@ project.ext.vectoricons = [
 
 apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle");
 ```
+
+## Paso 5 : instalar Una biblioteca polyfill para Alert.
+> **Note**: Se usa esta biblioteca que ya en android no viene en su estado Nativo, esta biblioteca hace varios años no la actualizan. 
+-- [**Prompt Android**](https://www.npmjs.com/package/react-native-prompt-android) --
+
+```sh
+npm i react-native-prompt-android
+```
