@@ -1,7 +1,11 @@
 
-import {  Image, ImageSourcePropType, Text, useWindowDimensions } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import {  useRef, useState } from 'react';
+import {  Image, ImageSourcePropType, NativeScrollEvent, NativeSyntheticEvent, Text, useWindowDimensions } from 'react-native';
 import { View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler';
+import { Button } from '../../components/ui/Button';
+import { globalStyles } from '../../../config/theme/theme';
 
 interface Slide {
     title: string;
@@ -28,27 +32,62 @@ const items: Slide[] = [
 ];
 
 export const SlidesScreen = () => {
+    // const { colors } = useContext(ThemeContext);
+    
+    const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+    const flatListRef = useRef<FlatList>(null);
+    const navigation = useNavigation();
+
+    const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+        const {contentOffset, layoutMeasurement} = event.nativeEvent;
+        const currentIndex = Math.floor(contentOffset.x / layoutMeasurement.width);
+
+        setCurrentSlideIndex(currentIndex > 0 ? currentIndex : 0);
+    };
+
+    const scrollToSlide = (index: number) => {
+        if ( !flatListRef.current ) return;
+
+        flatListRef.current.scrollToIndex({ 
+        index: index,
+        animated: true,
+        });
+
+    };
+
     return (
         <View
         style={{
-        flex: 1,
-        
-        }}>
+            flex: 1,
             
-            <FlatList
-                
-                data={items}
-                keyExtractor={item => item.title}
-                renderItem={({item}) => <SlideItem item={item} />}
-                horizontal
-                pagingEnabled
-                scrollEnabled={ false }
-                
-            />
+        }}>
+        <FlatList
+            ref={flatListRef}
+            data={items}
+            keyExtractor={item => item.title}
+            renderItem={({item}) => <SlideItem item={item} />}
+            horizontal
+            pagingEnabled
+            scrollEnabled={ false }
+            onScroll={onScroll}
+        />
 
+        {currentSlideIndex === items.length - 1 ? (
+            <Button
+            text="Finalizar"
+            onPress={() =>  navigation.goBack() }
+            styles={{position: 'absolute', bottom: 60, right: 30, width: 100}}
+            />
+        ) : (
+            <Button
+            text="Siguiente"
+            styles={{position: 'absolute', bottom: 60, right: 30, width: 100}}
+            onPress={() => scrollToSlide(currentSlideIndex + 1)}
+            />
+        )}
         </View>
-    )
-}
+    );
+};
 
 interface SlideItemProps {
     item: Slide;
@@ -56,21 +95,20 @@ interface SlideItemProps {
 
 const SlideItem = ({item}: SlideItemProps) => {
 
+    // const { colors } = useContext(ThemeContext);
     const {width} = useWindowDimensions();
-    const { img, desc} = item;
+    const {title, desc, img} = item;
 
     return (
         <View
-            style={{
+        style={{
             flex: 1,
             
             borderRadius: 5,
             padding: 40,
             justifyContent: 'center',
             width: width,
-        }}
-        >
-        
+        }}>
         <Image
             source={img}
             style={{
@@ -81,6 +119,8 @@ const SlideItem = ({item}: SlideItemProps) => {
             }}
         />
 
+        <Text style={[globalStyles.title]}>{title}</Text>
+
         <Text
             style={{
             
@@ -88,7 +128,6 @@ const SlideItem = ({item}: SlideItemProps) => {
             }}>
             {desc}
         </Text>
-
         </View>
-    )
-}
+    );
+};
